@@ -1,0 +1,80 @@
+/* Import Bootstrap & Bootstrap Icons */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+:root {
+  --primary-color: #0284c7;
+  --primary-hover: #0369a1;
+  --secondary-color: #64748b;
+  --accent-color: #06b6d4;
+  --dark-color: #0f172a;
+  --light-bg: #f8fafc;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: #334155;
+  background-color: var(--light-bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Custom Overrides & Utility Classes */
+.bg-gradient-primary-subtle {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%);
+}
+
+.doctor-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.doctor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08) !important;
+}
+
+.department-card {
+  transition: all 0.2s ease;
+}
+
+.department-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(2, 132, 199, 0.08) !important;
+  border-color: #bae6fd !important;
+}
+
+.hover-shadow {
+  transition: box-shadow 0.2s ease;
+}
+.hover-shadow:hover {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+}
+
+.max-w-500 {
+  max-width: 500px;
+}
+.max-w-700 {
+  max-width: 700px;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(8px);
+}
+
+.hover-white:hover {
+  color: #ffffff !important;
+}

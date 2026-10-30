@@ -1,0 +1,24 @@
+{
+  "name": "book-a-doctor-mern",
+  "version": "1.0.0",
+  "description": "Full-Stack Book a Doctor Healthcare Web Application (MERN Stack)",
+  "scripts": {
+    "server": "cd server && npm start",
+    "client": "cd client && npm run dev",
+    "seed": "cd server && npm run seed",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install"
+  },
+  "keywords": [
+    "mern",
+    "react",
+    "vite",
+    "nodejs",
+    "express",
+    "mongodb",
+    "doctor-booking",
+    "healthcare"
+  ],
+  "author": "PulseCare Team",
+  "license": "MIT"
+}

@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+*/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+server/.env
+
+# Build outputs
+dist/
+client/dist/
+build/
+
+# Uploads except placeholder
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# OS generated
+.DS_Store
+Thumbs.db
