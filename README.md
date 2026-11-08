@@ -349,7 +349,7 @@ Your complete source code is now live on GitHub!
 
 ---
 
-## 📜 Academic Project Submission Summary
+## 📜 Project Summary
 - **Project Title:** Book a Doctor (PulseCare)
 - **Tech Stack:** MERN Stack (MongoDB / MongoDB Atlas, Express.js, React.js, Node.js)
 - **Language:** JavaScript only (`.js`, `.jsx`). No TypeScript. No Python.
