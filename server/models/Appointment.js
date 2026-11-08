@@ -12,6 +12,37 @@ const appointmentSchema = new mongoose.Schema(
       ref: 'Doctor',
       required: true
     },
+    // Explicit appointment fields for clear patient & clinical audit
+    patientName: {
+      type: String,
+      required: [true, 'Patient name is required'],
+      trim: true
+    },
+    patientPhone: {
+      type: String,
+      required: [true, 'Patient mobile number is required'],
+      trim: true
+    },
+    patientEmail: {
+      type: String,
+      required: [true, 'Patient email address is required'],
+      trim: true,
+      lowercase: true
+    },
+    patientAddress: {
+      type: String,
+      default: ''
+    },
+    department: {
+      type: String,
+      required: [true, 'Medical department is required'],
+      trim: true
+    },
+    doctorName: {
+      type: String,
+      required: [true, 'Doctor name is required'],
+      trim: true
+    },
     appointmentDate: {
       type: String, // YYYY-MM-DD
       required: [true, 'Appointment date is required']
@@ -22,7 +53,7 @@ const appointmentSchema = new mongoose.Schema(
     },
     reason: {
       type: String,
-      required: [true, 'Reason for appointment is required'],
+      required: [true, 'Reason for visit is required'],
       trim: true
     },
     symptoms: {

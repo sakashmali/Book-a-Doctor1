@@ -46,6 +46,18 @@ const departmentsData = [
     description: "Comprehensive women's wellness, prenatal care, obstetrics, and reproductive healthcare.",
     icon: 'bi-gender-female',
     image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    name: 'Oncology',
+    description: 'Comprehensive cancer diagnostics, chemotherapy management, targeted therapy, and rehabilitation.',
+    icon: 'bi-shield-plus',
+    image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80'
+  },
+  {
+    name: 'ENT',
+    description: 'Specialized diagnosis and surgical care for ear, nose, throat, auditory, and sinus conditions.',
+    icon: 'bi-soundwave',
+    image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80'
   }
 ];
 
@@ -286,21 +298,21 @@ const doctorsData = [
     name: 'Dr. Tariq Al-Mansoor',
     email: 'dr.almansoor@pulsecare.com',
     phone: '+1 (555) 101-2009',
-    department: 'Cardiology',
-    specialization: 'Preventive Cardiology & Heart Failure Specialist',
-    qualifications: 'MBBS, MD (Medicine), DM (Cardiology)',
+    department: 'Oncology',
+    specialization: 'Medical Oncologist & Cancer Care Specialist',
+    qualifications: 'MBBS, MD (Medicine), DM (Medical Oncology)',
     experienceYears: 10,
-    consultationFee: 115,
+    consultationFee: 140,
     clinicAddress: {
-      hospitalName: 'Metro Heart & Vascular Center',
+      hospitalName: 'Metro Cancer Care & Infusion Pavilion',
       street: '202 Metro Blvd, Suite 500',
       city: 'Atlanta',
       state: 'GA',
       zipCode: '30303'
     },
-    bio: 'Dr. Tariq Al-Mansoor is dedicated to lifestyle cardiovascular therapy, hypertension reversal, non-invasive imaging, and advanced cardiac rehab.',
+    bio: 'Dr. Tariq Al-Mansoor is dedicated to evidence-based cancer therapies, personalized targeted immunotherapy, and patient-centric oncological rehabilitation.',
     avatar: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=500&q=80',
-    rating: 4.7,
+    rating: 4.9,
     reviewCount: 43,
     workingDays: ['Monday', 'Tuesday', 'Thursday', 'Friday', 'Saturday'],
     timeSlots: {
@@ -315,19 +327,19 @@ const doctorsData = [
     name: 'Dr. Jennifer Wu',
     email: 'dr.wu@pulsecare.com',
     phone: '+1 (555) 101-2010',
-    department: 'General Medicine',
-    specialization: 'Internal Medicine & Geriatric Care',
-    qualifications: 'MBBS, MD, AGSF',
-    experienceYears: 17,
-    consultationFee: 85,
+    department: 'ENT',
+    specialization: 'Otolaryngologist & Head-Neck Specialist',
+    qualifications: 'MBBS, MS (ENT), FACS',
+    experienceYears: 14,
+    consultationFee: 90,
     clinicAddress: {
-      hospitalName: 'Beacon Hill Wellness Clinic',
+      hospitalName: 'Beacon Hill ENT & Hearing Care',
       street: '410 Beacon Street, Suite 3',
       city: 'Philadelphia',
       state: 'PA',
       zipCode: '19104'
     },
-    bio: 'Dr. Jennifer Wu is an attentive internist with a passion for multi-morbidity care, adult disease prevention, polypharmacy management, and healthy aging guidance.',
+    bio: 'Dr. Jennifer Wu is an expert ENT surgeon specializing in sinus endoscopy, auditory rehabilitation, voice therapy, and pediatric allergy relief.',
     avatar: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=500&q=80',
     rating: 4.9,
     reviewCount: 130,

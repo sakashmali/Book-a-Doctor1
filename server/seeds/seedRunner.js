@@ -116,6 +116,12 @@ const seedDatabase = async () => {
     await Appointment.create({
       patient: demoPatient1._id,
       doctor: createdDoctors[0]._id, // Dr. Evelyn Carter
+      patientName: demoPatient1.name,
+      patientPhone: demoPatient1.phone,
+      patientEmail: demoPatient1.email,
+      patientAddress: demoPatient1.address,
+      department: createdDoctors[0].department,
+      doctorName: createdDoctors[0].name,
       appointmentDate: tomorrowStr,
       timeSlot: '10:00 AM',
       reason: 'Routine cardiovascular checkup and resting ECG assessment.',
@@ -139,6 +145,12 @@ const seedDatabase = async () => {
     await Appointment.create({
       patient: demoPatient1._id,
       doctor: createdDoctors[5]._id, // Dr. Robert Sterling
+      patientName: demoPatient1.name,
+      patientPhone: demoPatient1.phone,
+      patientEmail: demoPatient1.email,
+      patientAddress: demoPatient1.address,
+      department: createdDoctors[5].department,
+      doctorName: createdDoctors[5].name,
       appointmentDate: pastDateStr,
       timeSlot: '09:30 AM',
       reason: 'Persistent seasonal allergies and throat irritation.',
@@ -175,6 +187,12 @@ const seedDatabase = async () => {
     await Appointment.create({
       patient: demoPatient2._id,
       doctor: createdDoctors[1]._id, // Dr. Marcus Vance
+      patientName: demoPatient2.name,
+      patientPhone: demoPatient2.phone,
+      patientEmail: demoPatient2.email,
+      patientAddress: demoPatient2.address,
+      department: createdDoctors[1].department,
+      doctorName: createdDoctors[1].name,
       appointmentDate: nextDayStr,
       timeSlot: '11:00 AM',
       reason: 'Frequent migraine episodes and screen fatigue evaluation.',

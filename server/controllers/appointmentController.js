@@ -9,6 +9,10 @@ const createAppointment = async (req, res) => {
   try {
     const {
       doctorId,
+      patientName,
+      patientPhone,
+      patientEmail,
+      patientAddress,
       appointmentDate,
       timeSlot,
       reason,
@@ -30,6 +34,12 @@ const createAppointment = async (req, res) => {
     if (!doctor.isActive || !doctor.isApproved) {
       return res.status(400).json({ message: 'Selected doctor is currently unavailable for bookings' });
     }
+
+    // Resolved contact details (prefers user-submitted booking info or falls back to user account)
+    const finalPatientName = (patientName && patientName.trim()) || req.user.name || 'Patient';
+    const finalPatientPhone = (patientPhone && patientPhone.trim()) || req.user.phone || 'Not provided';
+    const finalPatientEmail = (patientEmail && patientEmail.trim().toLowerCase()) || req.user.email || 'patient@example.com';
+    const finalPatientAddress = (patientAddress && patientAddress.trim()) || req.user.address || '';
 
     // Date validation: ensure date is not in the past
     const todayStr = new Date().toISOString().split('T')[0];
@@ -81,6 +91,12 @@ const createAppointment = async (req, res) => {
     const appointment = await Appointment.create({
       patient: req.user._id,
       doctor: doctor._id,
+      patientName: finalPatientName,
+      patientPhone: finalPatientPhone,
+      patientEmail: finalPatientEmail,
+      patientAddress: finalPatientAddress,
+      department: doctor.department,
+      doctorName: doctor.name,
       appointmentDate,
       timeSlot: timeSlot.trim(),
       reason,

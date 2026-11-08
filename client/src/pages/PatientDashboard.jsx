@@ -320,15 +320,26 @@ const PatientDashboard = () => {
                         </div>
                       </div>
 
-                      {/* Date & Reason Bar */}
-                      <div className="bg-light p-2.5 rounded-3 mb-3 d-flex flex-wrap justify-content-between align-items-center gap-2 small">
-                        <div>
-                          <i className="bi bi-calendar-check text-primary me-1"></i>
-                          <strong>{appt.appointmentDate}</strong> at <strong className="text-primary">{appt.timeSlot}</strong>
+                      {/* Date & Booking Details Bar */}
+                      <div className="bg-light p-2.5 rounded-3 mb-2 small d-flex flex-column gap-1">
+                        <div className="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                          <div>
+                            <i className="bi bi-calendar-check text-primary me-1"></i>
+                            <strong>{appt.appointmentDate}</strong> at <strong className="text-primary">{appt.timeSlot}</strong>
+                          </div>
+                          <div className="text-secondary">
+                            <span className="badge bg-white text-dark border me-1">Patient: {appt.patientName || user?.name}</span>
+                            <span className="badge bg-white text-secondary border"><i className="bi bi-telephone me-1"></i>{appt.patientPhone || user?.phone || 'N/A'}</span>
+                          </div>
                         </div>
-                        <div className="text-secondary text-truncate" style={{ maxWidth: '350px' }}>
-                          <span className="text-muted">Reason:</span> {appt.reason}
+                        <div className="text-secondary text-truncate" title={appt.reason}>
+                          <span className="text-muted fw-semibold">Reason for Visit:</span> {appt.reason}
                         </div>
+                        {appt.patientAddress && (
+                          <div className="text-muted" style={{ fontSize: '11px' }}>
+                            <i className="bi bi-geo-alt me-1 text-danger"></i>Address: {appt.patientAddress}
+                          </div>
+                        )}
                       </div>
 
                       {/* Uploaded Reports Preview */}

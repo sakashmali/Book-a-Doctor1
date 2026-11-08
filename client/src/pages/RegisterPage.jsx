@@ -281,6 +281,8 @@ const RegisterPage = () => {
                           <option value="General Medicine">General Medicine</option>
                           <option value="Ophthalmology">Ophthalmology</option>
                           <option value="Gynecology">Gynecology</option>
+                          <option value="Oncology">Oncology</option>
+                          <option value="ENT">ENT</option>
                         </select>
                       </div>
 

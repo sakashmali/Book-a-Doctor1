@@ -635,9 +635,10 @@ const AdminDashboard = () => {
                 <table className="table table-hover align-middle mb-0">
                   <thead className="table-light">
                     <tr>
-                      <th>Patient</th>
-                      <th>Doctor</th>
+                      <th>Patient Details</th>
+                      <th>Department & Doctor</th>
                       <th>Date & Slot</th>
+                      <th>Reason for Visit</th>
                       <th>Fee</th>
                       <th>Status</th>
                       <th className="text-end">Admin Action</th>
@@ -647,16 +648,27 @@ const AdminDashboard = () => {
                     {appointments.map((a) => (
                       <tr key={a._id}>
                         <td>
-                          <strong className="text-dark d-block">{a.patient?.name}</strong>
-                          <small className="text-muted">{a.patient?.email}</small>
+                          <strong className="text-dark d-block">{a.patientName || a.patient?.name}</strong>
+                          <small className="text-secondary d-block"><i className="bi bi-telephone me-1"></i>{a.patientPhone || a.patient?.phone || '–'}</small>
+                          <small className="text-muted">{a.patientEmail || a.patient?.email}</small>
                         </td>
                         <td>
-                          <strong className="text-dark d-block">{a.doctor?.name}</strong>
-                          <small className="text-primary">{a.doctor?.department}</small>
+                          <span className="badge bg-primary-subtle text-primary d-inline-block mb-1">{a.department || a.doctor?.department}</span>
+                          <strong className="text-dark d-block small">{a.doctorName || a.doctor?.name}</strong>
                         </td>
                         <td>
                           <span className="fw-semibold text-dark d-block">{a.appointmentDate}</span>
                           <span className="badge bg-light text-dark border">{a.timeSlot}</span>
+                        </td>
+                        <td style={{ maxWidth: 180 }}>
+                          <span className="small text-dark text-truncate d-block" title={a.reason}>
+                            {a.reason}
+                          </span>
+                          {a.patientAddress && (
+                            <small className="text-muted text-truncate d-block" style={{ fontSize: '11px' }} title={a.patientAddress}>
+                              {a.patientAddress}
+                            </small>
+                          )}
                         </td>
                         <td className="fw-bold text-success">${a.fee}</td>
                         <td>

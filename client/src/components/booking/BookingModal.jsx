@@ -12,6 +12,11 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
   tomorrow.setDate(tomorrow.getDate() + 1);
   const defaultDateStr = tomorrow.toISOString().split('T')[0];
 
+  // Form Fields
+  const [patientName, setPatientName] = useState('');
+  const [patientPhone, setPatientPhone] = useState('');
+  const [patientEmail, setPatientEmail] = useState('');
+  const [patientAddress, setPatientAddress] = useState('');
   const [appointmentDate, setAppointmentDate] = useState(defaultDateStr);
   const [selectedSlot, setSelectedSlot] = useState('');
   const [reason, setReason] = useState('');
@@ -24,6 +29,16 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [bookingConfirmed, setBookingConfirmed] = useState(null);
+
+  // Sync patient info from user context when opened
+  useEffect(() => {
+    if (isOpen && user) {
+      setPatientName(user.name || '');
+      setPatientPhone(user.phone || '');
+      setPatientEmail(user.email || '');
+      setPatientAddress(user.address || '');
+    }
+  }, [isOpen, user]);
 
   // Fetch slots whenever doctor or date changes
   useEffect(() => {
@@ -81,6 +96,21 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
       return;
     }
 
+    if (!patientName.trim()) {
+      setErrorMessage('Please provide patient name.');
+      return;
+    }
+
+    if (!patientPhone.trim()) {
+      setErrorMessage('Please provide mobile number.');
+      return;
+    }
+
+    if (!patientEmail.trim()) {
+      setErrorMessage('Please provide email address.');
+      return;
+    }
+
     if (!selectedSlot) {
       setErrorMessage('Please select an available time slot.');
       return;
@@ -97,6 +127,10 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
     try {
       const formData = new FormData();
       formData.append('doctorId', doctor._id);
+      formData.append('patientName', patientName.trim());
+      formData.append('patientPhone', patientPhone.trim());
+      formData.append('patientEmail', patientEmail.trim());
+      formData.append('patientAddress', patientAddress.trim());
       formData.append('appointmentDate', appointmentDate);
       formData.append('timeSlot', selectedSlot);
       formData.append('reason', reason.trim());
@@ -137,18 +171,18 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
           {/* Modal Header */}
           <div className="modal-header bg-primary text-white px-4 py-3 border-0">
             <div className="d-flex align-items-center gap-3">
-              <div className="bg-white text-primary rounded-circle p-2 d-flex align-items-center justify-content-center" style={{ width: 44, height: 44 }}>
+              <div className="bg-white text-primary rounded-circle p-2 d-flex align-items-center justify-content-center shadow-sm" style={{ width: 44, height: 44 }}>
                 <i className="bi bi-calendar-check-fill fs-5"></i>
               </div>
               <div>
-                <h5 className="modal-title fw-bold mb-0">Book Consultation</h5>
-                <small className="opacity-90">Instant schedule with {doctor.name}</small>
+                <h5 className="modal-title fw-bold mb-0">Book Doctor Appointment</h5>
+                <small className="opacity-90">{doctor.name} &bull; {doctor.department}</small>
               </div>
             </div>
             <button type="button" className="btn-close btn-close-white" onClick={handleClose} aria-label="Close"></button>
           </div>
 
-          <div className="modal-body p-4">
+          <div className="modal-body p-4" style={{ maxHeight: '82vh', overflowY: 'auto' }}>
             {bookingConfirmed ? (
               /* Confirmation Success Screen */
               <div className="text-center py-4">
@@ -157,7 +191,7 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
                 </div>
                 <h4 className="fw-bold text-dark mb-1">Appointment Confirmed!</h4>
                 <p className="text-muted mb-4">
-                  Your appointment with <strong>{doctor.name}</strong> has been successfully booked.
+                  Your appointment with <strong>{bookingConfirmed.doctorName || doctor.name}</strong> has been successfully booked.
                 </p>
 
                 <div className="card bg-light border-0 rounded-3 p-3 max-w-500 mx-auto text-start mb-4">
@@ -166,16 +200,28 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
                     <span className="fw-semibold font-monospace small">#{bookingConfirmed._id.slice(-8).toUpperCase()}</span>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
-                    <span className="text-muted">Specialty:</span>
-                    <span className="fw-semibold">{doctor.specialization}</span>
+                    <span className="text-muted">Patient Name:</span>
+                    <span className="fw-semibold">{bookingConfirmed.patientName || patientName}</span>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <span className="text-muted">Mobile / Email:</span>
+                    <span className="fw-semibold">{bookingConfirmed.patientPhone} | {bookingConfirmed.patientEmail}</span>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <span className="text-muted">Department:</span>
+                    <span className="badge bg-primary-subtle text-primary">{bookingConfirmed.department || doctor.department}</span>
+                  </div>
+                  <div className="d-flex justify-content-between mb-2">
+                    <span className="text-muted">Doctor:</span>
+                    <span className="fw-semibold">{bookingConfirmed.doctorName || doctor.name}</span>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <span className="text-muted">Date & Time:</span>
                     <span className="fw-semibold text-primary">{bookingConfirmed.appointmentDate} at {bookingConfirmed.timeSlot}</span>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
-                    <span className="text-muted">Clinic:</span>
-                    <span className="fw-semibold">{doctor.clinicAddress?.hospitalName || 'PulseCare Clinic'}</span>
+                    <span className="text-muted">Reason for Visit:</span>
+                    <span className="fw-semibold text-truncate ps-2" style={{ maxWidth: '250px' }}>{bookingConfirmed.reason}</span>
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <span className="text-muted">Consultation Fee:</span>
@@ -222,14 +268,14 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
                       <h6 className="fw-bold mb-0 text-dark">{doctor.name}</h6>
                       <span className="badge bg-primary-subtle text-primary">{doctor.department}</span>
                     </div>
-                    <div className="small text-muted">{doctor.specialization} &bull; {doctor.experienceYears} Years Exp.</div>
+                    <div className="small text-muted">{doctor.specialization} &bull; {doctor.qualifications} ({doctor.experienceYears} Years Exp.)</div>
                     <div className="small text-secondary">
                       <i className="bi bi-geo-alt-fill text-danger me-1"></i>
                       {doctor.clinicAddress?.hospitalName}, {doctor.clinicAddress?.city}
                     </div>
                   </div>
                   <div className="text-end ps-2 border-start">
-                    <small className="text-muted d-block">Fee</small>
+                    <small className="text-muted d-block">Consultation Fee</small>
                     <span className="fs-5 fw-bold text-success">${doctor.consultationFee}</span>
                   </div>
                 </div>
@@ -242,6 +288,79 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
                 )}
 
                 <div className="row g-3">
+                  {/* Section 1: Patient Information */}
+                  <div className="col-12">
+                    <h6 className="fw-bold text-primary mb-1 border-bottom pb-1">
+                      <i className="bi bi-person-lines-fill me-1"></i> Patient Contact Details
+                    </h6>
+                  </div>
+
+                  {/* Patient Name */}
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold text-secondary small">
+                      <i className="bi bi-person me-1 text-primary"></i> Patient Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="e.g. Sarah Jenkins"
+                      value={patientName}
+                      onChange={(e) => setPatientName(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  {/* Mobile Number */}
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold text-secondary small">
+                      <i className="bi bi-telephone me-1 text-primary"></i> Mobile Number *
+                    </label>
+                    <input
+                      type="tel"
+                      className="form-control"
+                      placeholder="e.g. +1 (555) 234-5678"
+                      value={patientPhone}
+                      onChange={(e) => setPatientPhone(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold text-secondary small">
+                      <i className="bi bi-envelope me-1 text-primary"></i> Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder="e.g. sarah@example.com"
+                      value={patientEmail}
+                      onChange={(e) => setPatientEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  {/* Address */}
+                  <div className="col-md-6">
+                    <label className="form-label fw-semibold text-secondary small">
+                      <i className="bi bi-geo-alt me-1 text-primary"></i> Residential Address
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="e.g. 742 Evergreen Terrace, Springfield"
+                      value={patientAddress}
+                      onChange={(e) => setPatientAddress(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Section 2: Appointment Schedule */}
+                  <div className="col-12 mt-3">
+                    <h6 className="fw-bold text-primary mb-1 border-bottom pb-1">
+                      <i className="bi bi-calendar-event me-1"></i> Appointment Date & Time Selection
+                    </h6>
+                  </div>
+
                   {/* Date Selection */}
                   <div className="col-md-6">
                     <label className="form-label fw-semibold text-secondary small">
@@ -293,7 +412,7 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
                         {doctor.name} is not available on {slotsData?.dayOfWeek}s. Please pick another weekday.
                       </div>
                     ) : slotsData?.slots && slotsData.slots.length > 0 ? (
-                      <div className="d-flex flex-wrap gap-2 p-2 border rounded-3 bg-light" style={{ maxHeight: 160, overflowY: 'auto' }}>
+                      <div className="d-flex flex-wrap gap-2 p-2 border rounded-3 bg-light" style={{ maxHeight: 150, overflowY: 'auto' }}>
                         {slotsData.slots.map((s, idx) => (
                           <button
                             key={idx}
@@ -336,7 +455,7 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="e.g. Annual heart evaluation, chest discomfort, medication review"
+                      placeholder="e.g. Annual checkup, chest discomfort, skin rash, ear pain"
                       value={reason}
                       onChange={(e) => setReason(e.target.value)}
                       required
@@ -415,7 +534,7 @@ const BookingModal = ({ doctor, isOpen, onClose, onBookingSuccess }) => {
                       ) : (
                         <>
                           <i className="bi bi-lock-fill me-1"></i>
-                          Confirm & Book
+                          Confirm Appointment
                         </>
                       )}
                     </button>

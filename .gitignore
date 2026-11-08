@@ -26,3 +26,6 @@ yarn-error.log*
 # OS generated
 .DS_Store
 Thumbs.db
+#keep example environment files
+!.env.example
+!server/.env.example

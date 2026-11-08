@@ -115,8 +115,8 @@ const Home = () => {
                   <small className="text-secondary">Specialist Doctors</small>
                 </div>
                 <div className="col-4">
-                  <div className="fw-bold fs-4 text-dark">8</div>
-                  <small className="text-secondary">Clinical Departments</small>
+                  <div className="fw-bold fs-4 text-dark">10</div>
+                  <small className="text-secondary">Medical Departments</small>
                 </div>
                 <div className="col-4">
                   <div className="fw-bold fs-4 text-dark">99.4%</div>
@@ -166,7 +166,7 @@ const Home = () => {
           </div>
 
           <div className="row g-3">
-            {departments.slice(0, 8).map((dept) => (
+            {departments.slice(0, 10).map((dept) => (
               <div key={dept._id} className="col-lg-3 col-md-4 col-sm-6">
                 <Link
                   to={`/doctors?department=${encodeURIComponent(dept.name)}`}
